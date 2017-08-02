@@ -8,6 +8,7 @@
 #include "log.h"
 #include "alibio.h"
 #include "lzma_wrapper.h"
+#include "zstd_wrapper.h"
 #include "C/LzmaEnc.h"
 
 void packToText(pack *pk, FILE *fp, char *buf, int len)
@@ -106,7 +107,7 @@ void *blockToText(void *args)
     fclose(fp);
     free(buf);
     
-    compress_file(tmp);
+    zcompress_file(tmp);
     
     return NULL;
 }

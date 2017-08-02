@@ -4,6 +4,7 @@
 #include "ssl_fn.h"
 #include "log.h"
 #include "lzma_wrapper.h"
+#include "zstd_wrapper.h"
 
 #include <sstream>
 #include <stdlib.h>
@@ -11,7 +12,7 @@
 #include <string.h>
 #include <pthread.h>
 
-#define N_THREADS 5
+#define N_THREADS 1
 #define N_TEST_BLOCKS 9000
 
 /* Test if ssl_fn.c create_sha1sum is working correctly
@@ -86,7 +87,7 @@ typedef struct
 void *decompress_wrap(void *args)
 {
     decompParams *dp = (decompParams *)args;
-    decompress_file(dp->in7z, dp->outf);
+    zdecompress_file(dp->in7z, dp->outf);
     return NULL;
 }
 
@@ -96,7 +97,7 @@ void uncompress_test()
     decompParams dp[N_THREADS];
 
     for (int i = 0; i < N_THREADS; i++) {
-        sprintf(dp[i].in7z,"temp%d.file.7z", i+1);
+        sprintf(dp[i].in7z,"temp%d.file.zstd", i+1);
         sprintf(dp[i].outf, "temp%d.1unc",i+1);
         pthread_create(&threads[i], NULL, &decompress_wrap, (void *)&dp[i]);
     }
@@ -127,6 +128,7 @@ void chain_test()
     free(ch);
     
     uncompress_test();
+    //zcompress_file("asdf");
 }
 
 //Obsolete

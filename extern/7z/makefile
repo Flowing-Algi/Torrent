@@ -1,5 +1,9 @@
 PROG = lib7z
+#CC   = gcc -Wall -Werror -IC -c
 CC   = gcc -O2 -Wall -Werror -IC -c
+debug: CC += -g
+debug: all
+
 
 all:
 	$(CC) -o f1.o C/Alloc.c

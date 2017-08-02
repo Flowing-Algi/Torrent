@@ -18,3 +18,9 @@ The Windows one is called DefsW.h
 
 -----------------------------------------------------------------------
 
+ZSTD
+READ THIS PLOXo
+
+to compile the the extern zstd lib do:
+make lib-mt
+then copy the static library (libzstb.a) over to <project_root>/lib
